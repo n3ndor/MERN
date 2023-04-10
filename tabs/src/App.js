@@ -1,3 +1,4 @@
+import React from "react"
 import './App.css';
 import Tabs from './components/Tabs';
 
@@ -21,7 +22,10 @@ function App() {
       <h2>Example of Tabs</h2>
       <h3>Click on the Tab Button to change the content:</h3>
       <hr />
-      <Tabs pages={pages} />
+      <React.StrictMode>
+        <Tabs pages={pages} />
+      </React.StrictMode>
+
       <hr />
     </div>
   );
