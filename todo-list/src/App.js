@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './App.css';
 
+import Todo from "./components/Todo";
+
 function App() {
     // const newTodoStateArr = useState("");
     // const newTodo = newTodoStateArr[0];
@@ -65,24 +67,9 @@ function App() {
 
             {/* ["todo1", "todo2"] call with map {[<div>todo1</div>, <div>todo2</div>]} */}
             {todos.map((todo, i) => {
-                const todoClasses = ["bold", "italic"];
-                if (todo.complete) {
-                    todoClasses.push("line-through")
-                }
-
                 return (
-                    <div key={i}>
-                        <input onChange={(event) => {
-                            handleToggleComplete(i);
-                        }} checked={todo.complete} type="checkbox" />
-                        <span>{todo.text}</span>
-                        <button
-                            onClick={(event) => {
-                                handleTodoDelete(i);
-                            }}
-                            style={{ marginLeft: "10px" }}
-                        >Delete</button>
-                    </div>);
+                    <Todo key={i} i={i} todo={todo} handleToggleComplete={handleToggleComplete} handleTodoDelete={handleTodoDelete} />
+                );
             })}
         </div>
     );
