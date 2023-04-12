@@ -1,0 +1,11 @@
+.App {
+    width: 250px;
+    margin-left: 50px;
+}
+
+li:hover {
+    color: green;
+    font-size: larger;
+    font-weight: bolder;
+    cursor: crosshair;
+}
