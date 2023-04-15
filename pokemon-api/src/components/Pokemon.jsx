@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Pokemon() {
     const [pokemon, setPokemon] = useState([]); //held the items in a new array
 
-
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=807')")
-        .then(response => {
-            return response.json()
-        })
-        .then(response => {
-            setPokemon(response.results)
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        ;
-
+    useEffect(() => {
+        fetch("https://pokeapi.co/api/v2/pokemon?limit=807')")
+            .then(response => {
+                return response.json();
+            })
+            .then(response => {
+                setPokemon(response.results)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            ;
+    }, []);
 
 
     return (
