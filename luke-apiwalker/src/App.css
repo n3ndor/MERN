@@ -1,0 +1,24 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    margin: 20px;
+}
+
+.content-container {
+    width: 80%;
+}
+
+.list-container {
+    margin-right: 100px;
+    width: 30%;
+}
+
+
+.display-data {
+    height: 100%;
+    width: 50%;
+}
