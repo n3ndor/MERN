@@ -5,14 +5,17 @@ import axios from 'axios';
 const Pokemon = () => {
     const [pokemons, setPokemons] = useState([]);
 
-    // Pokemon API contains only name and url... kinda boring, we make an advanced approach
-
     // useEffect(() => {
     //     axios
     //         .get("https://pokeapi.co/api/v2/pokemon?limit=807")
-    //         .then((response) => {
-    //             console.log(response.data.results);
-    //             setPokemons(response.data.results);
+    //         .then(async (response) => {
+    //             const pokemonsData = await Promise.all( // use Promise.all() to wait for all additional requests to complete.
+    //                 response.data.results.map(async (poki) => { // map over the response.data.results array, which contains the basic information (name and URL) for each Pokemon.
+    //                     const pokiDetails = await axios.get(poki.url); // make a request using the URL provided (poki.url)
+    //                     return pokiDetails.data; // return the detailed information using pokiDetails.data and store it in the pokemonsData array.
+    //                 })
+    //             );
+    //             setPokemons(pokemonsData); //update the state with the pokemonsData array, which now contains the detailed information for each Pokemon.
     //         })
     //         .catch((err) => console.log(err));
     // }, []);
@@ -20,14 +23,9 @@ const Pokemon = () => {
     useEffect(() => {
         axios
             .get("https://pokeapi.co/api/v2/pokemon?limit=807")
-            .then(async (response) => {
-                const pokemonsData = await Promise.all( // use Promise.all() to wait for all additional requests to complete.
-                    response.data.results.map(async (poki) => { // map over the response.data.results array, which contains the basic information (name and URL) for each Pokemon.
-                        const pokiDetails = await axios.get(poki.url); // make a request using the URL provided (poki.url)
-                        return pokiDetails.data; // return the detailed information using pokiDetails.data and store it in the pokemonsData array.
-                    })
-                );
-                setPokemons(pokemonsData); //update the state with the pokemonsData array, which now contains the detailed information for each Pokemon.
+            .then((response) => {
+                console.log(response.data.results);
+                setPokemons(response.data.results);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -38,20 +36,22 @@ const Pokemon = () => {
             <table className="table table-striped table-bordered table-hover">
                 <thead>
                     <tr className="sticky-top top-0 bg-secondary text-white">
-                        <th>ID</th>
+                        {/* <th>ID</th> */}
                         <th>Name</th>
-                        <th>Base Experience</th>
+                        <th>URL</th>
+                        {/* <th>Base Experience</th>
                         <th>Abilities</th>
                         <th>Types</th>
-                        <th>Stats</th>
+                        <th>Stats</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     {pokemons.map((poki, index) => (
                         <tr key={index}>
-                            <td>{poki.order}</td>
+                            {/* <td>{poki.order}</td> */}
                             <td>{poki.name}</td>
-                            <td>{poki.base_experience}</td>
+                            <td>{poki.url}</td>
+                            {/* <td>{poki.base_experience}</td>
                             <td>
                                 {poki.abilities?.map((ability, idx) => (
                                     <div key={idx}>{ability.ability.name}</div>
@@ -68,7 +68,7 @@ const Pokemon = () => {
                                         {stat.stat.name}: {stat.base_stat}
                                     </div>
                                 ))}
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                 </tbody>
