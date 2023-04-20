@@ -1,0 +1,74 @@
+(windows - terminal)
+
+cd c:\Program Files\MongoDB\Server\5.0\bin
+mongo.exe
+
+show dbs
+show collections
+
+//create a database
+use my_first_db
+//create a collection
+db.createCollection("students")
+//insert a new row
+db.students.insert({ name:"First Student", home_state: "Amsterdam", lucky_number: 1, birthday: { day: 1, month: 1, year: 1990}})
+
+//display all rows in the collection
+db.students.find() //add .pretty after, to have a nice display
+//display how many rows are in the collection
+db.students.find().count()
+
+//retrieve all students who are from California or Washington
+db.students.find({$or: [{ home_state: "California"}, {home_state: "Washington"}]})
+
+//all students with lucky number greater than 3
+db.students.find({lucky_number: {$gt: 3}})
+
+// lucky number is less than or equak to 10
+ db.students.find({lucky_number: {$lte: 10}})
+
+//lucky number is between 1 and 9 inclusive
+ db.students.find({lucky_number: {$gte: 1, $lte:9}})
+
+//Add a field named 'interests' to all student documents in the collection. 
+///The field should be an array and contain the following entries: 'coding', 'brunch', MongoDB'. 
+////Add this field to all documents using a single command.
+db.students.updateMany({}, {$set: {interests: ["coding", "brunch", "MongoDB"]}})
+
+//add some interest for one Student
+db.students.update({name: "First Student"}, {$push: {interests: "counting"}})
+
+//add "taxes" to interest array
+db.students.update({name: "Second Student"}, {$push: {interests: "taxes"}})
+
+//remove "taxes" from interest array
+db.students.update({name: "Second Student"}, {$pull: {interests: "taxes"}})
+
+//Remove ALL students from California
+db.students.remove({home_state: "California"})
+
+//remove a student by name
+db.students.remove({name: "Fourth Student"})
+
+//remove (JUST ONE) student whose lucky number is greater than 5
+db.students.remove({lucky_number: {$gt: 5}}, true)
+
+//add a field to all students number_of_belts and set it to 0
+db.students.updateMany({},{$set: {number_of_belts: 0}})
+
+//increment the number_of_belts for all students in Washington by 1
+db.students.updateMany({home_state: "Washington"},{$inc: {number_of_belts: 1}})
+
+//rename number_of_belts to belts_earned
+db.students.updateMany({}, {$rename: {"number_of_belts": "belts_earned"}})
+
+//remove lucky_number field
+db.students.updateMany({}, {$unset: {"lucky_number": ""}})
+
+//add a new field and set the value as the current date
+db.students.updateMany({},{$set: {"updated_on": Date()}})
+
+
+
+
+
