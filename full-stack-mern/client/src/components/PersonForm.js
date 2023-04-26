@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-const PersonForm = () => {
+const PersonForm = (props) => {
+    const { people, setPeople } = props;
     //keep track of what is being typed via useState hook
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -16,6 +17,8 @@ const PersonForm = () => {
             .then(res => {
                 console.log(res); // always console log to get used to tracking your data!
                 console.log(res.data);
+                //new object created and returned from our post request. 
+                setPeople([...people, res.data]);
             })
             .catch(err => console.log(err))
     }
