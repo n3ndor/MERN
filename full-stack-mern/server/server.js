@@ -3,8 +3,10 @@ const app = express();
 //add cors for cross-origin requests
 const cors = require("cors")
 app.use(cors())
-
-
+const port = 8000;
+app.use(express.json());
+require("./config/mongoose.config");
+app.use(express.urlencoded({ extended: true }));
 //shorthand import
 require("./routes/person.routes")(app);
 //the same import in longhand
@@ -13,4 +15,4 @@ require("./routes/person.routes")(app);
 
 
 
-app.listen(8000, () => console.log(`Listening on port: ${port}`));
+app.listen(port, () => console.log(`Listening on port: ${port}`));
