@@ -4,6 +4,7 @@ import ManagePlayers from './components/ManagePlayers';
 import ListPlayers from './components/ListPlayers';
 import AddPlayer from './components/AddPlayer';
 import StatusPlayers from './components/StatusPlayers';
+import UpdatePlayer from './components/UpdatePlayer';
 
 function App() {
   const [activeTab, setActiveTab] = useState("list");
@@ -23,6 +24,7 @@ function App() {
           <Route path="/players/addplayer" element={<><ManagePlayers setActiveTab={setActiveTab} /><AddPlayer activeTab={activeTab} /></>} />
           <Route path="/status/game/:id" element={<StatusPlayers />} />
           <Route path="/" element={<Navigate to="/players/list" />} />
+          <Route path="/players/edit/:id" element={<UpdatePlayer />} />
         </Routes>
       </BrowserRouter>
     </div>

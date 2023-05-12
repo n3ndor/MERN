@@ -9,6 +9,7 @@ const PlayerSchema = mongoose.Schema(
         },
         preferredPosition: {
             type: String,
+            enum: ["Forward", "Midfielder", "Goalkeeper"]
         },
         gameOneStatus: {
             type: String,
