@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Container, Table, Button } from 'react-bootstrap';
 
 const StatusPlayers = () => {
     const [players, setPlayers] = useState([]);
-    const [game, setGame] = useState('gameOneStatus');
+    const [selectedGame, setSelectedGame] = useState('gameOneStatus');
 
     useEffect(() => {
         axios.get('http://localhost:8000/players')
@@ -13,7 +13,7 @@ const StatusPlayers = () => {
     }, []);
 
     const handleStatusChange = (id, status) => {
-        axios.patch(`http://localhost:8000/players/${id}`, { [game]: status })
+        axios.patch(`http://localhost:8000/players/${id}`, { [selectedGame]: status })
             .then(res => {
                 setPlayers(players.map(player => player._id === id ? res.data : player));
             })
@@ -21,32 +21,36 @@ const StatusPlayers = () => {
     };
 
     return (
-        <div>
-            <h2>StatusPlayers</h2>
-            <Link onClick={() => setGame('gameOneStatus')}>Game 1</Link> |
-            <Link onClick={() => setGame('gameTwoStatus')}> Game 2</Link> |
-            <Link onClick={() => setGame('gameThreeStatus')}> Game 3</Link>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Player Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {players.map((player) => (
-                        <tr key={player._id}>
-                            <td>{player.name}</td>
-                            <td>
-                                <button onClick={() => handleStatusChange(player._id, 'Playing')} style={{ background: player[game] === 'Playing' ? 'green' : '' }}>Playing</button>
-                                <button onClick={() => handleStatusChange(player._id, 'Not Playing')} style={{ background: player[game] === 'Not Playing' ? 'red' : '' }}>Not Playing</button>
-                                <button onClick={() => handleStatusChange(player._id, 'Undecided')} style={{ background: player[game] === 'Undecided' ? 'yellow' : '' }}>Undecided</button>
-                            </td>
+        <Container className="d-flex justify-content-center align-items-start custom-container">
+            <div className="custom-box">
+                <h2 className="custom-text text-center mb-4">Player Status</h2>
+                <div className="text-center">
+                    <Button variant="outline-success" onClick={() => setSelectedGame('gameOneStatus')} className={selectedGame === 'gameOneStatus' ? 'active' : ''}>Game 1</Button>
+                    <Button variant="outline-warning" onClick={() => setSelectedGame('gameTwoStatus')} className={selectedGame === 'gameTwoStatus' ? 'active' : ''}>Game 2</Button>
+                    <Button variant="outline-info" onClick={() => setSelectedGame('gameThreeStatus')} className={selectedGame === 'gameThreeStatus' ? 'active' : ''}>Game 3</Button>
+                </div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th className="custom-text">Player Name</th>
+                            <th className="custom-text">Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {players.map((player) => (
+                            <tr key={player._id}>
+                                <td className="custom-text">{player.name}</td>
+                                <td>
+                                    <Button variant={player[selectedGame] === 'Playing' ? 'success' : 'outline-success'} onClick={() => handleStatusChange(player._id, 'Playing')}>Playing</Button>
+                                    <Button variant={player[selectedGame] === 'Not Playing' ? 'danger' : 'outline-danger'} onClick={() => handleStatusChange(player._id, 'Not Playing')}>Not Playing</Button>
+                                    <Button variant={player[selectedGame] === 'Undecided' ? 'warning' : 'outline-warning'} onClick={() => handleStatusChange(player._id, 'Undecided')}>Undecided</Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+        </Container>
     )
 }
 

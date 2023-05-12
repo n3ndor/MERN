@@ -5,18 +5,19 @@ import ListPlayers from './components/ListPlayers';
 import AddPlayer from './components/AddPlayer';
 import StatusPlayers from './components/StatusPlayers';
 import UpdatePlayer from './components/UpdatePlayer';
+import './App.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState("list");
 
   return (
     <div className="App">
-      <h2>Team Manager</h2>
+      <h1>Team Manager</h1>
       <BrowserRouter>
         <nav>
           <ul>
-            <li><Link to="/players/list">Manage Players</Link></li>
-            <li><Link to="/status/game/:id">Manage Status</Link></li>
+            <li><Link to="/players/list"><span>Manage Players</span> </Link></li>
+            <li><Link to="/status/game/:id"><span>Manage Status</span> </Link></li>
           </ul>
         </nav>
         <Routes>
